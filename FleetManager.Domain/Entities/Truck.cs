@@ -4,6 +4,8 @@ namespace FleetManager.Domain.Entities
 {
     public class Truck : Vehicle
     {
+        public Truck() { }
+
         public override int NumberOfPassengers => 1;
         public Truck(ChassisId chassisId, string color)
             : base(chassisId, color) { }

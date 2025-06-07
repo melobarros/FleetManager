@@ -13,8 +13,6 @@ namespace FleetManager.Infrastructure.EntityFramework.Mappings
                 .HasValue<Truck>(nameof(Truck))
                 .HasValue<Bus>(nameof(Bus));
 
-            builder.HasKey(b => new { b.ChassisId.Series, b.ChassisId.Number });
-
             builder.OwnsOne(b => b.ChassisId, chassis =>
                 {
                     chassis.Property(c => c.Series)
@@ -25,6 +23,10 @@ namespace FleetManager.Infrastructure.EntityFramework.Mappings
                         .HasColumnName("ChassisNumber")
                         .IsRequired();
                 });
+
+            builder.Property<string>("ChassisSeries");
+            builder.Property<uint>("ChassisNumber");
+            builder.HasKey("ChassisSeries", "ChassisNumber");
 
             builder.Property(b => b.Color)
                 .IsRequired();

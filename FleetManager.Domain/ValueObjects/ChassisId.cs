@@ -8,6 +8,8 @@ namespace FleetManager.Domain.ValueObjects
 {
     public class ChassisId
     {
+        public ChassisId() { }
+
         public string Series { get; set; }
         public uint Number { get; set; }
 

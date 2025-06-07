@@ -4,6 +4,8 @@ namespace FleetManager.Domain.Entities
 {
     public abstract class Vehicle
     {
+        public Vehicle() { }
+
         public ChassisId ChassisId { get; private set; }
         public string Color { get; private set; }
         public abstract int NumberOfPassengers { get; }
