@@ -14,5 +14,6 @@ namespace FleetManager.Domain.Interfaces
         IEnumerable<Vehicle> GetAll();
         void Add(Vehicle vehicle);
         void Update(Vehicle vehicle);
+        void Delete(Vehicle vehicle);
     }
 }
