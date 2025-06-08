@@ -4,6 +4,7 @@
 Fleet Manager is a simple **.NET web application for managing a fleet of vehicles**. 
 It provides **CRUD operations via a REST API**, with full **input validation**, **error handling and unit test coverage**.
 
+<br>
 ## How to Install and Run
 ### Cloud
 Skip the setup and jump straight into using the application, **the project is deployed into an Azure App Service**.
