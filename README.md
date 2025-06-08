@@ -39,6 +39,7 @@ Running tests:
 dotnet test
 ```
 
+<br>
 ## About the project
 ### Features
 - **Insert a new vehicle**: supply chassis attributes, type and color; duplicates rejected
@@ -86,7 +87,8 @@ Some examples of each principle being applied:
 **Dependency Inversion Principle**
 - The AppService depends on the interface of the repository, making the EF Core implementation invisible
 
+<br>
 ## Credits
 Developed by Amauri Barros
-
+<br>
 barros.amauri@yahoo.com.br
