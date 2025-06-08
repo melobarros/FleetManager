@@ -6,7 +6,8 @@ It provides **CRUD operations via a REST API**, with full **input validation**, 
 
 ## How to Install and Run
 ### Cloud
-If you'd like to skip the setup and jump straight into using the application, **I have deployed the project into a Azure App Service** with a CI/CD pipeline.
+Skip the setup and jump straight into using the application, **the project is deployind into a Azure App Service**.
+
 Link: 
 https://fleetmanager-amauri-czesc8beajf4gvfn.brazilsouth-01.azurewebsites.net/swagger
 
@@ -49,6 +50,7 @@ dotnet test
 - Entity Framework Core with SQLite Database and Migrations
 - Swagger documentation
 - Unit Testing with xUnit and Moq
+- Azure and GitHub Actions CI/CD pipeline
 
 ### Design Patterns and Best Practices
 - **Domain-Driven Design**: focus on modeling the business domain, with entities encapsulating business rules and enforcing invariants in their constructors
@@ -84,4 +86,5 @@ Some examples of each principle being applied:
 
 ## Credits
 Developed by Amauri Barros
+
 barros.amauri@yahoo.com.br
