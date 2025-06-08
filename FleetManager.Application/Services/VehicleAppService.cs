@@ -3,7 +3,6 @@ using FleetManager.Domain.Entities;
 using FleetManager.Domain.Enums;
 using FleetManager.Domain.Factories;
 using FleetManager.Domain.Interfaces;
-using FleetManager.Domain.ValueObjects;
 
 namespace FleetManager.Application.Services
 {
@@ -18,14 +17,13 @@ namespace FleetManager.Application.Services
 
         public VehicleDto Create(VehicleDto dto)
         {
-            var chassisId = new ChassisId(dto.ChassisSeries, dto.ChassisNumber);
-            var vehicleExists = _vehicleRepository.GetByChassis(chassisId) != null;
+            var vehicleExists = _vehicleRepository.GetByChassis(dto.ChassisSeries, dto.ChassisNumber) != null;
 
             if (vehicleExists)
                 throw new InvalidOperationException("A vehicle with this chassis already exists.");
 
             var vehicleType = Enum.Parse<VehicleType>(dto.Type, ignoreCase: true);
-            var vehicle = VehicleFactory.Create(vehicleType, chassisId, dto.Color);
+            var vehicle = VehicleFactory.Create(vehicleType, dto.ChassisSeries, dto.ChassisNumber, dto.Color);
 
             _vehicleRepository.Add(vehicle);
             return ToDto(vehicle);
@@ -33,8 +31,7 @@ namespace FleetManager.Application.Services
 
         public VehicleDto ChangeColor(string chassisSeries, uint chassisNumber, string newColor)
         {
-            var chassisId = new ChassisId(chassisSeries, chassisNumber);
-            var vehicle = _vehicleRepository.GetByChassis(chassisId);
+            var vehicle = _vehicleRepository.GetByChassis(chassisSeries, chassisNumber);
 
             if (vehicle == null)
                 throw new KeyNotFoundException("Vehicle not found.");
@@ -47,8 +44,7 @@ namespace FleetManager.Application.Services
 
         public VehicleDto GetByChassis(string chassisSeries, uint chassisNumber)
         {
-            var chassisId = new ChassisId(chassisSeries, chassisNumber);
-            var vehicle = _vehicleRepository.GetByChassis(chassisId);
+            var vehicle = _vehicleRepository.GetByChassis(chassisSeries, chassisNumber);
 
             if (vehicle == null)
                 throw new KeyNotFoundException("Vehicle not found.");
@@ -63,8 +59,7 @@ namespace FleetManager.Application.Services
 
         public VehicleDto Delete(string chassisSeries, uint chassisNumber) 
         {
-            var chassisId = new ChassisId(chassisSeries, chassisNumber);
-            var vehicle = _vehicleRepository.GetByChassis(chassisId);
+            var vehicle = _vehicleRepository.GetByChassis(chassisSeries, chassisNumber);
 
             if (vehicle == null)
                 throw new KeyNotFoundException("Vehicle not found.");
@@ -78,8 +73,8 @@ namespace FleetManager.Application.Services
         {
             return new VehicleDto
             {
-                ChassisSeries       = vehicle.ChassisId.Series,
-                ChassisNumber       = vehicle.ChassisId.Number,
+                ChassisSeries       = vehicle.ChassisSeries,
+                ChassisNumber       = vehicle.ChassisNumber,
                 Type                = vehicle.GetType().Name,
                 Color               = vehicle.Color,
                 NumberOfPassengers  = vehicle.NumberOfPassengers

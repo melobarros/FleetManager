@@ -1,6 +1,5 @@
 ﻿using FleetManager.Domain.Entities;
 using FleetManager.Domain.Interfaces;
-using FleetManager.Domain.ValueObjects;
 using FleetManager.Infrastructure.EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +14,13 @@ namespace FleetManager.Infrastructure.EntityFramework.Repositories
             _dbContext = dbContext;
         }
 
-        public Vehicle? GetByChassis(ChassisId chassisId)
+        public Vehicle? GetByChassis(string chassisSeries, uint chassisNumber)
         {
             return _dbContext.Vehicles
                     .AsNoTracking()
                     .FirstOrDefault(v =>  
-                        v.ChassisId.Series == chassisId.Series &&
-                        v.ChassisId.Number == chassisId.Number);
+                        v.ChassisSeries == chassisSeries &&
+                        v.ChassisNumber == chassisNumber);
         }
 
         public IEnumerable<Vehicle> GetAll()

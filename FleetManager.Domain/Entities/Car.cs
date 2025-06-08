@@ -1,13 +1,11 @@
-﻿using FleetManager.Domain.ValueObjects;
-
-namespace FleetManager.Domain.Entities
+﻿namespace FleetManager.Domain.Entities
 {
     public class Car : Vehicle
     {
-        public Car() { }
+        protected Car() { }
+        public Car(string chassisSeries, uint chassisNumber, string color)
+            : base(chassisSeries, chassisNumber, color) { }
 
         public override int NumberOfPassengers => 4;
-        public Car(ChassisId chassisId, string color)
-            : base(chassisId, color) { }
     }
 }

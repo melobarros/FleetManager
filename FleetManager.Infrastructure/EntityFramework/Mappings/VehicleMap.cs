@@ -4,32 +4,26 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FleetManager.Infrastructure.EntityFramework.Mappings
 {
-    public class VehicleMap :IEntityTypeConfiguration<Vehicle>
+    public class VehicleMap : IEntityTypeConfiguration<Vehicle>
     {
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             builder.HasDiscriminator<string>("VehicleType")
-                .HasValue<Car>(nameof(Car))
-                .HasValue<Truck>(nameof(Truck))
-                .HasValue<Bus>(nameof(Bus));
+                   .HasValue<Car>("Car")
+                   .HasValue<Truck>("Truck")
+                   .HasValue<Bus>("Bus");
 
-            builder.OwnsOne(b => b.ChassisId, chassis =>
-                {
-                    chassis.Property(c => c.Series)
-                        .HasColumnName("ChassisSeries")
-                        .IsRequired();
+            builder.HasKey(v => new { v.ChassisSeries, v.ChassisNumber });
 
-                    chassis.Property(c => c.Number)
-                        .HasColumnName("ChassisNumber")
-                        .IsRequired();
-                });
+            builder.Property(v => v.ChassisSeries)
+                   .HasMaxLength(50)
+                   .IsRequired();
 
-            builder.Property<string>("ChassisSeries");
-            builder.Property<uint>("ChassisNumber");
-            builder.HasKey("ChassisSeries", "ChassisNumber");
+            builder.Property(v => v.ChassisNumber)
+                   .IsRequired();
 
-            builder.Property(b => b.Color)
-                .IsRequired();
+            builder.Property(v => v.Color)
+                   .IsRequired();
         }
     }
 }
