@@ -40,7 +40,7 @@ Running tests:
 dotnet test
 ```
 
-<br>
+
 ## About the project
 ### Features
 - **Insert a new vehicle**: supply chassis attributes, type and color; duplicates rejected
