@@ -49,5 +49,12 @@ namespace FleetManager.API.Controllers
             var updatedVehicle = _vehicleAppService.ChangeColor(chassisSeries, chassisNumber, color);
             return Ok(updatedVehicle);
         }
+
+        [HttpDelete("{chassisSeries}/{chassisNumber}")]
+        public ActionResult<VehicleDto> Delete(string chassisSeries, uint chassisNumber)
+        {
+            var dto = _vehicleAppService.Delete(chassisSeries, chassisNumber);
+            return Ok(dto);
+        }
     }
 }
