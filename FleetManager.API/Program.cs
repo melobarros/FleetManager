@@ -2,31 +2,15 @@ using FleetManager.Application.Services;
 using FleetManager.Domain.Interfaces;
 using FleetManager.Infrastructure.EntityFramework.Data;
 using FleetManager.Infrastructure.EntityFramework.Repositories;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsDevelopment())
-{
-    var sqliteConnection = new SqliteConnection("Data Source=:memory:;Mode=Memory;Cache=Shared");
-    sqliteConnection.Open();
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlite(sqliteConnection)
-    );
-}
-else
-{
-    var dataDir = Environment.GetEnvironmentVariable("DATA_DIR");
-    var path = string.IsNullOrEmpty(dataDir)
-        ? "fleet.db"
-        : $"{dataDir}/fleet.db";
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlite($"Data Source={path}")
-    );
-}
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=fleet.db")
+);
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IVehicleAppService, VehicleAppService>();
@@ -52,9 +36,9 @@ app.UseExceptionHandler(errorApp =>
         var response = new { message = ex?.Message };
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = ex is ArgumentException ? 400 :
-                                      ex is InvalidOperationException ? 409 :
-                                      ex is KeyNotFoundException ? 404 :
-                                      500;
+                                     ex is InvalidOperationException ? 409 :
+                                     ex is KeyNotFoundException ? 404 :
+                                     500;
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));
     });
 });
