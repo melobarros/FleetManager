@@ -6,7 +6,7 @@ It provides **CRUD operations via a REST API**, with full **input validation**, 
 
 ## How to Install and Run
 ### Cloud
-Skip the setup and jump straight into using the application, **the project is deployind into a Azure App Service**.
+Skip the setup and jump straight into using the application, **the project is deployed into an Azure App Service**.
 
 Link: 
 https://fleetmanager-amauri-czesc8beajf4gvfn.brazilsouth-01.azurewebsites.net/swagger
