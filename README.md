@@ -11,7 +11,7 @@ Skip the setup and jump straight into using the application, **the project is de
 Link: 
 https://fleetmanager-amauri-czesc8beajf4gvfn.brazilsouth-01.azurewebsites.net/swagger
 
-
+<br>
 
 ### Local
 Pre Requisites:
