@@ -88,7 +88,6 @@ Some examples of each principle being applied:
 **Dependency Inversion Principle**
 - The AppService depends on the interface of the repository, making the EF Core implementation invisible
 
-<br>
 ## Credits
 Developed by Amauri Barros
 <br>
