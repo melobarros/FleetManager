@@ -11,6 +11,8 @@ Skip the setup and jump straight into using the application, **the project is de
 Link: 
 https://fleetmanager-amauri-czesc8beajf4gvfn.brazilsouth-01.azurewebsites.net/swagger
 
+
+
 ### Local
 Pre Requisites:
 - .NET 8 SDK or later. [Download link](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)
