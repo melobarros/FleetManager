@@ -10,7 +10,8 @@ public static class DiagnosticSeed
     {
         modelBuilder.Entity<DiagnosticProtocol>().HasData(
             new DiagnosticProtocol { Id = 1, Name = "Truck Diagnostic Protocol", VehicleType = VehicleType.Truck },
-            new DiagnosticProtocol { Id = 2, Name = "Bus Diagnostic Protocol", VehicleType = VehicleType.Bus }
+            new DiagnosticProtocol { Id = 2, Name = "Bus Diagnostic Protocol", VehicleType = VehicleType.Bus },
+            new DiagnosticProtocol { Id = 3, Name = "Car Diagnostic Protocol", VehicleType = VehicleType.Car }
         );
 
         modelBuilder.Entity<Sensor>().HasData(
@@ -33,6 +34,16 @@ public static class DiagnosticSeed
             new Sensor { Id = 14, Name = "Wheel Speed Front Axle", Unit = "km/h", ProtocolId = 2 }
         );
 
+        modelBuilder.Entity<Sensor>().HasData(
+            new Sensor { Id = 15, Name = "Engine Coolant Temperature", Unit = "°C", ProtocolId = 3 },
+            new Sensor { Id = 16, Name = "Engine Speed (RPM)", Unit = "RPM", ProtocolId = 3 },
+            new Sensor { Id = 17, Name = "Oil Pressure", Unit = "Bar", ProtocolId = 3 },
+            new Sensor { Id = 18, Name = "Fuel Level", Unit = "%", ProtocolId = 3 },
+            new Sensor { Id = 19, Name = "Battery Voltage", Unit = "V", ProtocolId = 3 },
+            new Sensor { Id = 20, Name = "Brake Fluid Level", Unit = "%", ProtocolId = 3 },
+            new Sensor { Id = 21, Name = "Tire Pressure", Unit = "PSI", ProtocolId = 3 }
+        );
+
         modelBuilder.Entity<ErrorCode>().HasData(
             new ErrorCode { Id = 1, Code = "T001", Description = "Engine Overheating", ProtocolId = 1 },
             new ErrorCode { Id = 2, Code = "T002", Description = "Low Oil Pressure", ProtocolId = 1 },
@@ -48,6 +59,14 @@ public static class DiagnosticSeed
             new ErrorCode { Id = 9, Code = "B003", Description = "Brake Air Pressure Low", ProtocolId = 2 },
             new ErrorCode { Id = 10, Code = "B004", Description = "Wheel Speed Sensor Failure", ProtocolId = 2 },
             new ErrorCode { Id = 11, Code = "B005", Description = "Communication Bus Error", ProtocolId = 2 }
+        );
+
+        modelBuilder.Entity<ErrorCode>().HasData(
+            new ErrorCode { Id = 12, Code = "C001", Description = "Engine Overheating", ProtocolId = 3 },
+            new ErrorCode { Id = 13, Code = "C002", Description = "Low Brake Fluid", ProtocolId = 3 },
+            new ErrorCode { Id = 14, Code = "C003", Description = "Low Tire Pressure", ProtocolId = 3 },
+            new ErrorCode { Id = 15, Code = "C004", Description = "Battery Voltage Low", ProtocolId = 3 },
+            new ErrorCode { Id = 16, Code = "C005", Description = "Fuel System Leak", ProtocolId = 3 }
         );
     }
 }
