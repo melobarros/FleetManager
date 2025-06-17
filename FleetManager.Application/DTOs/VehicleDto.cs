@@ -13,5 +13,6 @@ namespace FleetManager.Application.DTOs
         public string Type { get; set; }
         public string Color { get; set; }
         public int NumberOfPassengers { get; set; }
+        public string DiagnosticProtocol { get; set; }
     }
 }

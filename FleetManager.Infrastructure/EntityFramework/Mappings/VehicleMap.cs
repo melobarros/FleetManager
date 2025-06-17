@@ -24,6 +24,14 @@ namespace FleetManager.Infrastructure.EntityFramework.Mappings
 
             builder.Property(v => v.Color)
                    .IsRequired();
+
+            builder.Property<int>("ProtocolId")
+                .IsRequired();
+
+            builder.HasOne(v => v.DiagnosticProtocol)
+                   .WithMany()
+                   .HasForeignKey("ProtocolId")
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

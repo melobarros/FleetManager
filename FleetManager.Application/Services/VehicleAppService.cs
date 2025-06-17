@@ -79,7 +79,8 @@ namespace FleetManager.Application.Services
                 ChassisNumber       = vehicle.ChassisNumber,
                 Type                = vehicle.GetType().Name,
                 Color               = vehicle.Color,
-                NumberOfPassengers  = vehicle.NumberOfPassengers
+                NumberOfPassengers  = vehicle.NumberOfPassengers,
+                DiagnosticProtocol  = vehicle.DiagnosticProtocol.Name
             };
         }
     }

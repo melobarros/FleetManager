@@ -7,8 +7,10 @@ namespace FleetManager.Domain.Entities
         public string ChassisSeries { get; private set; }
         public uint ChassisNumber { get; private set; }
         public string Color { get; private set; }
-        public DiagnosticProtocol DiagnosticProtocol { get; private set; }
+        public int ProtocolId { get; private set; }
         public abstract int NumberOfPassengers { get; }
+
+        public DiagnosticProtocol DiagnosticProtocol { get; private set; }
 
         protected Vehicle() { }
 

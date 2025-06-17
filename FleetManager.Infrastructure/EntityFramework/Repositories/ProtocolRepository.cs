@@ -20,7 +20,6 @@ namespace FleetManager.Infrastructure.EntityFramework.Repositories
             return _dbContext.DiagnosticProtocols
                              .Include(p => p.Sensors)
                              .Include(p => p.ErrorCodes)
-                             .AsNoTracking()
                              .FirstOrDefault(p => p.VehicleType == vehicleType);
         }
     }

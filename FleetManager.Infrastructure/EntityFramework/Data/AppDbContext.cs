@@ -19,9 +19,11 @@ namespace FleetManager.Infrastructure.EntityFramework.Data
         {
             modelBuilder.ApplyConfiguration(new VehicleMap());
             modelBuilder.ApplyConfiguration(new DiagnosticProtocolMap());
+
+            DiagnosticSeed.Seed(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new SensorMap());
             modelBuilder.ApplyConfiguration(new ErrorCodeMap());
-            DiagnosticSeed.Seed(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

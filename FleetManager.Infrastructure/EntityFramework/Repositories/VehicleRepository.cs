@@ -17,6 +17,7 @@ namespace FleetManager.Infrastructure.EntityFramework.Repositories
         public Vehicle? GetByChassis(string chassisSeries, uint chassisNumber)
         {
             return _dbContext.Vehicles
+                    .Include(v => v.DiagnosticProtocol)
                     .AsNoTracking()
                     .FirstOrDefault(v =>  
                         v.ChassisSeries == chassisSeries &&
@@ -25,7 +26,10 @@ namespace FleetManager.Infrastructure.EntityFramework.Repositories
 
         public IEnumerable<Vehicle> GetAll()
         {
-            return _dbContext.Vehicles.AsNoTracking().ToList();
+            return _dbContext.Vehicles
+                .AsNoTracking()
+                .Include(v => v.DiagnosticProtocol)
+                .ToList();
         }
 
         public void Add(Vehicle vehicle)
