@@ -8,13 +8,11 @@ public static class DiagnosticSeed
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
-        // Protocolos
         modelBuilder.Entity<DiagnosticProtocol>().HasData(
             new DiagnosticProtocol { Id = 1, Name = "Truck Diagnostic Protocol", VehicleType = VehicleType.Truck },
             new DiagnosticProtocol { Id = 2, Name = "Bus Diagnostic Protocol", VehicleType = VehicleType.Bus }
         );
 
-        // Sensores Truck (mais realista agora)
         modelBuilder.Entity<Sensor>().HasData(
             new Sensor { Id = 1, Name = "Engine Coolant Temperature", Unit = "°C", ProtocolId = 1 },
             new Sensor { Id = 2, Name = "Engine Speed (RPM)", Unit = "RPM", ProtocolId = 1 },
@@ -25,7 +23,6 @@ public static class DiagnosticSeed
             new Sensor { Id = 7, Name = "Transmission Oil Temperature", Unit = "°C", ProtocolId = 1 }
         );
 
-        // Sensores Bus
         modelBuilder.Entity<Sensor>().HasData(
             new Sensor { Id = 8, Name = "Engine Coolant Temperature", Unit = "°C", ProtocolId = 2 },
             new Sensor { Id = 9, Name = "Engine Speed (RPM)", Unit = "RPM", ProtocolId = 2 },
@@ -36,7 +33,6 @@ public static class DiagnosticSeed
             new Sensor { Id = 14, Name = "Wheel Speed Front Axle", Unit = "km/h", ProtocolId = 2 }
         );
 
-        // Códigos de erro Truck (realistas simulados)
         modelBuilder.Entity<ErrorCode>().HasData(
             new ErrorCode { Id = 1, Code = "T001", Description = "Engine Overheating", ProtocolId = 1 },
             new ErrorCode { Id = 2, Code = "T002", Description = "Low Oil Pressure", ProtocolId = 1 },
@@ -46,7 +42,6 @@ public static class DiagnosticSeed
             new ErrorCode { Id = 6, Code = "T006", Description = "Transmission Oil Overheating", ProtocolId = 1 }
         );
 
-        // Códigos de erro Bus (realistas simulados)
         modelBuilder.Entity<ErrorCode>().HasData(
             new ErrorCode { Id = 7, Code = "B001", Description = "Passenger Door Sensor Fault", ProtocolId = 2 },
             new ErrorCode { Id = 8, Code = "B002", Description = "AC Compressor Failure", ProtocolId = 2 },
