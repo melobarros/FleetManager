@@ -2,6 +2,7 @@
 using FleetManager.Infrastructure.EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FleetManager.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250617132853_AddedDiagnosticsAndSeeds")]
+    partial class AddedDiagnosticsAndSeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
@@ -383,7 +386,7 @@ namespace FleetManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProtocolId")
+                    b.Property<int>("DiagnosticProtocolId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("VehicleType")
@@ -393,7 +396,7 @@ namespace FleetManager.Infrastructure.Migrations
 
                     b.HasKey("ChassisSeries", "ChassisNumber");
 
-                    b.HasIndex("ProtocolId");
+                    b.HasIndex("DiagnosticProtocolId");
 
                     b.ToTable("Vehicles");
 
@@ -449,8 +452,8 @@ namespace FleetManager.Infrastructure.Migrations
                 {
                     b.HasOne("FleetManager.Domain.Entities.Diagnostics.DiagnosticProtocol", "DiagnosticProtocol")
                         .WithMany()
-                        .HasForeignKey("ProtocolId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("DiagnosticProtocolId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DiagnosticProtocol");
