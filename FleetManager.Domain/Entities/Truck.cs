@@ -6,8 +6,8 @@ namespace FleetManager.Domain.Entities
     {
         protected Truck() { }
 
-        public Truck(string chassisSeries, uint chassisNumber, string color, DiagnosticProtocol protocol)
-            : base(chassisSeries, chassisNumber, color, protocol) { }
+        public Truck(string chassisSeries, uint chassisNumber, string color)
+            : base(chassisSeries, chassisNumber, color) { }
 
         public override int NumberOfPassengers => 1;
     }

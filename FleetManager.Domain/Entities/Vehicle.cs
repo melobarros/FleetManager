@@ -12,19 +12,16 @@ namespace FleetManager.Domain.Entities
 
         protected Vehicle() { }
 
-        protected Vehicle(string chassisSeries, uint chassisNumber, string color, DiagnosticProtocol protocol)
+        protected Vehicle(string chassisSeries, uint chassisNumber, string color)
         {
             if(string.IsNullOrEmpty(chassisSeries))
                 throw new ArgumentNullException("Chassis Series is required.");
             if(string.IsNullOrEmpty(color))
                 throw new ArgumentNullException("Color is required.");
-            if(protocol == null)
-                throw new ArgumentNullException("Diagnostic Protocol is required.");
 
             ChassisSeries = chassisSeries;
             ChassisNumber = chassisNumber;
             Color = color;
-            DiagnosticProtocol = protocol;
         }
 
         public void ChangeColor(string newColor)
@@ -33,6 +30,11 @@ namespace FleetManager.Domain.Entities
                 throw new ArgumentNullException("New Color is required.");
 
             Color = newColor;
+        }
+
+        public void SetDiagnosticProtocol(DiagnosticProtocol protocol)
+        {
+            DiagnosticProtocol = protocol ?? throw new ArgumentNullException("Diagnostic Protocol is required.");
         }
     }
 }
