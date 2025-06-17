@@ -9,10 +9,12 @@ namespace FleetManager.Application.Services
     public class VehicleAppService : IVehicleAppService
     {
         private readonly IVehicleRepository _vehicleRepository;
+        private readonly IVehicleFactoryAppService _vehicleFactoryAppService;
 
-        public VehicleAppService(IVehicleRepository vehicleRepository)
+        public VehicleAppService(IVehicleRepository vehicleRepository, IVehicleFactoryAppService vehicleFactoryAppService)
         {
             _vehicleRepository = vehicleRepository;
+            _vehicleFactoryAppService = vehicleFactoryAppService;
         }
 
         public VehicleDto Create(VehicleDto dto)
@@ -23,7 +25,7 @@ namespace FleetManager.Application.Services
                 throw new InvalidOperationException("A vehicle with this chassis already exists.");
 
             var vehicleType = Enum.Parse<VehicleType>(dto.Type, ignoreCase: true);
-            var vehicle = VehicleFactory.Create(vehicleType, dto.ChassisSeries, dto.ChassisNumber, dto.Color);
+            var vehicle = _vehicleFactoryAppService.Create(vehicleType, dto.ChassisSeries, dto.ChassisNumber, dto.Color);
 
             _vehicleRepository.Add(vehicle);
             return ToDto(vehicle);

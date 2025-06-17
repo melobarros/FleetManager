@@ -10,12 +10,14 @@ namespace FleetManager.Tests.Services
     public  class VehicleAppServiceTests
     {
         private readonly Mock<IVehicleRepository> _vehicleRepositoryMock;
+        private readonly Mock<IVehicleFactoryAppService> _vehicleFactoryAppServiceMock;
         private readonly VehicleAppService _vehicleAppService;
 
         public VehicleAppServiceTests()
         {
             _vehicleRepositoryMock = new Mock<IVehicleRepository>();
-            _vehicleAppService = new VehicleAppService(_vehicleRepositoryMock.Object);
+            _vehicleFactoryAppServiceMock = new Mock<IVehicleFactoryAppService>();
+            _vehicleAppService = new VehicleAppService(_vehicleRepositoryMock.Object, _vehicleFactoryAppServiceMock.Object);
         }
 
         [Fact]
