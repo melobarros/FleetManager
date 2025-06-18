@@ -19,5 +19,13 @@ public class SensorMap : IEntityTypeConfiguration<Sensor>
 
         builder.Property(s => s.ProtocolId)
                .IsRequired();
+
+        builder.Property(s => s.MinThreshold)
+               .IsRequired()
+               .HasColumnType("INTEGER");
+
+        builder.Property(s => s.MaxThreshold)
+               .IsRequired()
+               .HasColumnType("INTEGER");
     }
 }
