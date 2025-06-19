@@ -9,12 +9,14 @@ namespace FleetManager.Tests.Controllers
     public class VehiclesControllerTests
     {
         private readonly Mock<IVehicleAppService> _appServiceMock;
+        private readonly Mock<IDiagnosticAppService> _diagnosticAppServiceMock;
         private readonly VehiclesController _vehiclesController;
 
         public VehiclesControllerTests()
         {
             _appServiceMock = new Mock<IVehicleAppService>();
-            _vehiclesController = new VehiclesController(_appServiceMock.Object);
+            _diagnosticAppServiceMock = new Mock<IDiagnosticAppService>();
+            _vehiclesController = new VehiclesController(_appServiceMock.Object, _diagnosticAppServiceMock.Object);
         }
 
         [Fact]

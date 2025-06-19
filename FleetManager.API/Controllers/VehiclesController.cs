@@ -9,10 +9,12 @@ namespace FleetManager.API.Controllers
     public class VehiclesController : ControllerBase
     {
         private readonly IVehicleAppService _vehicleAppService;
+        private readonly IDiagnosticAppService _diagnosticAppService;
 
-        public VehiclesController(IVehicleAppService vehicleAppService)
+        public VehiclesController(IVehicleAppService vehicleAppService, IDiagnosticAppService diagnosticAppService)
         {
             _vehicleAppService = vehicleAppService;
+            _diagnosticAppService = diagnosticAppService;
         }
 
         [HttpGet("{chassisSeries}/{chassisNumber}")]
@@ -55,6 +57,13 @@ namespace FleetManager.API.Controllers
         {
             var dto = _vehicleAppService.Delete(chassisSeries, chassisNumber);
             return Ok(dto);
+        }
+
+        [HttpGet("{chassisSeries}/{chassisNumber}/diagnostic")]
+        public ActionResult<DiagnosticResultDto> GetDiagnostic(string chassisSeries, uint chassisNumber)
+        {
+            var diag = _diagnosticAppService.RunDiagnostic(chassisSeries, chassisNumber);
+            return Ok(diag);
         }
     }
 }
