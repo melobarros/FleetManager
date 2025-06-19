@@ -20,5 +20,15 @@ public class ErrorCodeMap : IEntityTypeConfiguration<ErrorCode>
 
         builder.Property(e => e.ProtocolId)
                .IsRequired();
+
+        builder.HasOne(e => e.Protocol)
+                .WithMany(p => p.ErrorCodes)
+                .HasForeignKey(e => e.ProtocolId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.Sensors)
+               .WithOne(s => s.ErrorCode)
+               .HasForeignKey(s => s.ErrorCodeId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

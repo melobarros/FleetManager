@@ -27,5 +27,18 @@ public class SensorMap : IEntityTypeConfiguration<Sensor>
         builder.Property(s => s.MaxThreshold)
                .IsRequired()
                .HasColumnType("INTEGER");
+
+        builder.Property(s => s.ErrorCodeId)
+               .IsRequired();
+
+        builder.HasOne(s => s.Protocol)
+               .WithMany(p => p.Sensors)
+               .HasForeignKey(s => s.ProtocolId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(s => s.ErrorCode)
+               .WithMany(e => e.Sensors)
+               .HasForeignKey(s => s.ErrorCodeId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

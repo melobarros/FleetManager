@@ -18,6 +18,8 @@ namespace FleetManager.Infrastructure.EntityFramework.Repositories
         {
             return _dbContext.Vehicles
                     .Include(v => v.DiagnosticProtocol)
+                    .ThenInclude(v => v.Sensors)
+                    .ThenInclude(v => v.ErrorCode)
                     .AsNoTracking()
                     .FirstOrDefault(v =>  
                         v.ChassisSeries == chassisSeries &&
