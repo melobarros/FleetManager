@@ -17,7 +17,7 @@ namespace FleetManager.Application.Services
             _vehicleFactoryAppService = vehicleFactoryAppService;
         }
 
-        public VehicleDto Create(VehicleDto dto)
+        public VehicleDto Create(CreateVehicleRequest dto)
         {
             var vehicleExists = _vehicleRepository.GetByChassis(dto.ChassisSeries, dto.ChassisNumber) != null;
 

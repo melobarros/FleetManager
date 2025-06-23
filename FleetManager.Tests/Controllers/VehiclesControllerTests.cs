@@ -63,6 +63,14 @@ namespace FleetManager.Tests.Controllers
         [Fact]
         public void Create_ReturnsCreatedAtAction_WhenValid()
         {
+            var createRequest = new CreateVehicleRequest
+            {
+                ChassisSeries = "C2",
+                ChassisNumber = 2,
+                Type = "Truck",
+                Color = "Blue",
+            };
+
             var dto = new VehicleDto
             {
                 ChassisSeries = "C2",
@@ -71,10 +79,10 @@ namespace FleetManager.Tests.Controllers
                 Color = "Blue",
                 NumberOfPassengers = 1
             };
-            _appServiceMock.Setup(s => s.Create(dto))
+            _appServiceMock.Setup(s => s.Create(createRequest))
                         .Returns(dto);
 
-            var result = _vehiclesController.Create(dto);
+            var result = _vehiclesController.Create(createRequest);
 
             var created = Assert.IsType<CreatedAtActionResult>(result.Result);
             Assert.Equal(nameof(VehiclesController.GetByChassis), created.ActionName);

@@ -43,7 +43,7 @@ namespace FleetManager.Tests.Services
         [Fact]
         public void Create_ShouldReturnDto_WhenValid()
         {
-            var dto = new VehicleDto
+            var dto = new CreateVehicleRequest
             {
                 ChassisSeries = "VLV-C",
                 ChassisNumber = 1,
@@ -66,7 +66,7 @@ namespace FleetManager.Tests.Services
             _vehicleRepositoryMock.Setup(r => r.GetByChassis("VLV", 1))
                      .Returns(new Car("VLV", 1, "Blue"));
 
-            var dto = new VehicleDto
+            var dto = new CreateVehicleRequest
             {
                 ChassisSeries = "VLV",
                 ChassisNumber = 1,
@@ -169,7 +169,7 @@ namespace FleetManager.Tests.Services
 
         private VehicleDto CreateNewTestVehicle(string chassisSeries, uint chassisNumber, string type, string color)
         {
-            var dto = new VehicleDto
+            var dto = new CreateVehicleRequest
             {
                 ChassisSeries = chassisSeries,
                 ChassisNumber = chassisNumber,

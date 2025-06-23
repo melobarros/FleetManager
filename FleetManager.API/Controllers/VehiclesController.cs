@@ -29,7 +29,7 @@ namespace FleetManager.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<VehicleDto> Create([FromBody] VehicleDto dto)
+        public ActionResult<VehicleDto> Create([FromBody] CreateVehicleRequest dto)
         {
             if (dto == null)
                 return BadRequest("Vehicle data is required.");
