@@ -1,6 +1,7 @@
 ﻿using FleetManager.API.Controllers;
 using FleetManager.Application.DTOs;
 using FleetManager.Application.Services;
+using FleetManager.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -9,12 +10,14 @@ namespace FleetManager.Tests.Controllers
     public class VehiclesControllerTests
     {
         private readonly Mock<IVehicleAppService> _appServiceMock;
+        private readonly Mock<IDiagnosticAppService> _diagnosticAppServiceMock;
         private readonly VehiclesController _vehiclesController;
 
         public VehiclesControllerTests()
         {
             _appServiceMock = new Mock<IVehicleAppService>();
-            _vehiclesController = new VehiclesController(_appServiceMock.Object);
+            _diagnosticAppServiceMock = new Mock<IDiagnosticAppService>();
+            _vehiclesController = new VehiclesController(_appServiceMock.Object, _diagnosticAppServiceMock.Object);
         }
 
         [Fact]
@@ -60,6 +63,14 @@ namespace FleetManager.Tests.Controllers
         [Fact]
         public void Create_ReturnsCreatedAtAction_WhenValid()
         {
+            var createRequest = new CreateVehicleRequest
+            {
+                ChassisSeries = "C2",
+                ChassisNumber = 2,
+                Type = "Truck",
+                Color = "Blue",
+            };
+
             var dto = new VehicleDto
             {
                 ChassisSeries = "C2",
@@ -68,10 +79,10 @@ namespace FleetManager.Tests.Controllers
                 Color = "Blue",
                 NumberOfPassengers = 1
             };
-            _appServiceMock.Setup(s => s.Create(dto))
+            _appServiceMock.Setup(s => s.Create(createRequest))
                         .Returns(dto);
 
-            var result = _vehiclesController.Create(dto);
+            var result = _vehiclesController.Create(createRequest);
 
             var created = Assert.IsType<CreatedAtActionResult>(result.Result);
             Assert.Equal(nameof(VehiclesController.GetByChassis), created.ActionName);
@@ -117,6 +128,40 @@ namespace FleetManager.Tests.Controllers
             var ok = Assert.IsType<OkObjectResult>(result.Result);
             var returned = Assert.IsType<VehicleDto>(ok.Value);
             Assert.Equal("Black", returned.Color);
+        }
+
+        [Fact]
+        public void GetDiagnostic_ReturnsOk_WithDiagnosticResultDto()
+        {
+            var chassisSeries = "S1";
+            uint chassisNumber = 1;
+            var expectedDto = new DiagnosticResultDto
+            {
+                VehicleType = VehicleType.Car,
+                ExecutionDate = DateTime.Now,
+                Readings = new List<SensorReading>(),
+                Errors = new List<DetectedError>()
+            };
+            _diagnosticAppServiceMock.Setup(s => s.RunDiagnostic(chassisSeries, chassisNumber)).Returns(expectedDto);
+
+            var result = _vehiclesController.GetDiagnostic(chassisSeries, chassisNumber);
+
+            var ok = Assert.IsType<OkObjectResult>(result.Result);
+            var returned = Assert.IsType<DiagnosticResultDto>(ok.Value);
+            Assert.Same(expectedDto, returned);
+            _diagnosticAppServiceMock.Verify(s => s.RunDiagnostic(chassisSeries, chassisNumber), Times.Once);
+        }
+
+        [Fact]
+        public void GetDiagnostic_ThrowsKeyNotFoundException_WhenVehicleNotFound()
+        {
+            var chassisSeries = "X";
+            uint chassisNumber = 2;
+            _diagnosticAppServiceMock.Setup(s => s.RunDiagnostic(chassisSeries, chassisNumber)).Throws(new KeyNotFoundException("Vehicle not found."));
+
+            var ex = Assert.Throws<KeyNotFoundException>(() => _vehiclesController.GetDiagnostic(chassisSeries, chassisNumber));
+            Assert.Equal("Vehicle not found.", ex.Message);
+            _diagnosticAppServiceMock.Verify(s => s.RunDiagnostic(chassisSeries, chassisNumber), Times.Once);
         }
     }
 }

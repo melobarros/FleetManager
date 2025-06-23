@@ -1,8 +1,11 @@
-﻿namespace FleetManager.Domain.Entities
+﻿using FleetManager.Domain.Entities.Diagnostics;
+
+namespace FleetManager.Domain.Entities
 {
     public class Truck : Vehicle
     {
         protected Truck() { }
+
         public Truck(string chassisSeries, uint chassisNumber, string color)
             : base(chassisSeries, chassisNumber, color) { }
 

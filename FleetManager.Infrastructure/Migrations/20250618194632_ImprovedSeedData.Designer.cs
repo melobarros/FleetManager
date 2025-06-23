@@ -2,6 +2,7 @@
 using FleetManager.Infrastructure.EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FleetManager.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250618194632_ImprovedSeedData")]
+    partial class ImprovedSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
@@ -92,7 +95,7 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 2,
                             Code = "T002",
-                            Description = "High Oil Pressure",
+                            Description = "Low Oil Pressure",
                             ProtocolId = 1
                         },
                         new
@@ -106,14 +109,14 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 4,
                             Code = "T004",
-                            Description = "Brake Air Pressure High",
+                            Description = "Brake Air Pressure Low",
                             ProtocolId = 1
                         },
                         new
                         {
                             Id = 5,
                             Code = "T005",
-                            Description = "Battery Voltage High",
+                            Description = "Battery Voltage Low",
                             ProtocolId = 1
                         },
                         new
@@ -141,7 +144,7 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 9,
                             Code = "B003",
-                            Description = "Brake Air Pressure High",
+                            Description = "Brake Air Pressure Low",
                             ProtocolId = 2
                         },
                         new
@@ -176,21 +179,21 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 13,
                             Code = "C002",
-                            Description = "High Brake Fluid",
+                            Description = "Low Brake Fluid",
                             ProtocolId = 3
                         },
                         new
                         {
                             Id = 14,
                             Code = "C003",
-                            Description = "High Tire Pressure",
+                            Description = "Low Tire Pressure",
                             ProtocolId = 3
                         },
                         new
                         {
                             Id = 15,
                             Code = "C004",
-                            Description = "Battery Voltage High",
+                            Description = "Battery Voltage Low",
                             ProtocolId = 3
                         },
                         new
@@ -204,7 +207,7 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 17,
                             Code = "C006",
-                            Description = "High Oil Pressure",
+                            Description = "Low Oil Pressure",
                             ProtocolId = 3
                         });
                 });

@@ -1,13 +1,19 @@
-﻿namespace FleetManager.Domain.Entities
+﻿using FleetManager.Domain.Entities.Diagnostics;
+
+namespace FleetManager.Domain.Entities
 {
     public abstract class Vehicle
     {
         public string ChassisSeries { get; private set; }
         public uint ChassisNumber { get; private set; }
         public string Color { get; private set; }
+        public int ProtocolId { get; private set; }
         public abstract int NumberOfPassengers { get; }
 
+        public DiagnosticProtocol DiagnosticProtocol { get; private set; }
+
         protected Vehicle() { }
+
         protected Vehicle(string chassisSeries, uint chassisNumber, string color)
         {
             if(string.IsNullOrEmpty(chassisSeries))
@@ -22,10 +28,15 @@
 
         public void ChangeColor(string newColor)
         {
-            if (string.IsNullOrEmpty(newColor))
+            if(string.IsNullOrEmpty(newColor))
                 throw new ArgumentNullException("New Color is required.");
 
             Color = newColor;
+        }
+
+        public void SetDiagnosticProtocol(DiagnosticProtocol protocol)
+        {
+            DiagnosticProtocol = protocol ?? throw new ArgumentNullException("Diagnostic Protocol is required.");
         }
     }
 }

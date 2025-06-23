@@ -5,7 +5,7 @@ namespace FleetManager.Application.Services
 {
     public interface IVehicleAppService
     {
-        VehicleDto Create(VehicleDto dto);
+        VehicleDto Create(CreateVehicleRequest dto);
         VehicleDto ChangeColor(string chassisSeries, uint chassisNumber, string newColor);
         VehicleDto GetByChassis(string chassisSeries, uint chassisNumber);
         IEnumerable<VehicleDto> GetAll();

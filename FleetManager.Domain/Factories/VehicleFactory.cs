@@ -1,4 +1,5 @@
 ﻿using FleetManager.Domain.Entities;
+using FleetManager.Domain.Entities.Diagnostics;
 using FleetManager.Domain.Enums;
 
 namespace FleetManager.Domain.Factories
@@ -15,6 +16,5 @@ namespace FleetManager.Domain.Factories
                 _ => throw new ArgumentOutOfRangeException(nameof(type), "Unknown vehicle type")
             };
         }
-
     }
 }

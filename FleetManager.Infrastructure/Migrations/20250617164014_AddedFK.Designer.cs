@@ -2,6 +2,7 @@
 using FleetManager.Infrastructure.EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FleetManager.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250617164014_AddedFK")]
+    partial class AddedFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
@@ -92,7 +95,7 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 2,
                             Code = "T002",
-                            Description = "High Oil Pressure",
+                            Description = "Low Oil Pressure",
                             ProtocolId = 1
                         },
                         new
@@ -106,14 +109,14 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 4,
                             Code = "T004",
-                            Description = "Brake Air Pressure High",
+                            Description = "Brake Air Pressure Low",
                             ProtocolId = 1
                         },
                         new
                         {
                             Id = 5,
                             Code = "T005",
-                            Description = "Battery Voltage High",
+                            Description = "Battery Voltage Low",
                             ProtocolId = 1
                         },
                         new
@@ -141,7 +144,7 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 9,
                             Code = "B003",
-                            Description = "Brake Air Pressure High",
+                            Description = "Brake Air Pressure Low",
                             ProtocolId = 2
                         },
                         new
@@ -153,16 +156,9 @@ namespace FleetManager.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 18,
-                            Code = "B006",
-                            Description = "Engine Overheating",
-                            ProtocolId = 2
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Code = "B007",
-                            Description = "Fuel System Leak",
+                            Id = 11,
+                            Code = "B005",
+                            Description = "Communication Bus Error",
                             ProtocolId = 2
                         },
                         new
@@ -176,21 +172,21 @@ namespace FleetManager.Infrastructure.Migrations
                         {
                             Id = 13,
                             Code = "C002",
-                            Description = "High Brake Fluid",
+                            Description = "Low Brake Fluid",
                             ProtocolId = 3
                         },
                         new
                         {
                             Id = 14,
                             Code = "C003",
-                            Description = "High Tire Pressure",
+                            Description = "Low Tire Pressure",
                             ProtocolId = 3
                         },
                         new
                         {
                             Id = 15,
                             Code = "C004",
-                            Description = "Battery Voltage High",
+                            Description = "Battery Voltage Low",
                             ProtocolId = 3
                         },
                         new
@@ -199,13 +195,6 @@ namespace FleetManager.Infrastructure.Migrations
                             Code = "C005",
                             Description = "Fuel System Leak",
                             ProtocolId = 3
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Code = "C006",
-                            Description = "High Oil Pressure",
-                            ProtocolId = 3
                         });
                 });
 
@@ -213,15 +202,6 @@ namespace FleetManager.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ErrorCodeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MaxThreshold")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MinThreshold")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -239,8 +219,6 @@ namespace FleetManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ErrorCodeId");
-
                     b.HasIndex("ProtocolId");
 
                     b.ToTable("Sensors");
@@ -249,19 +227,20 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ErrorCodeId = 1,
-                            MaxThreshold = 95,
-                            MinThreshold = 0,
                             Name = "Engine Coolant Temperature",
                             ProtocolId = 1,
                             Unit = "°C"
                         },
                         new
                         {
+                            Id = 2,
+                            Name = "Engine Speed (RPM)",
+                            ProtocolId = 1,
+                            Unit = "RPM"
+                        },
+                        new
+                        {
                             Id = 3,
-                            ErrorCodeId = 2,
-                            MaxThreshold = 100,
-                            MinThreshold = 2,
                             Name = "Oil Pressure",
                             ProtocolId = 1,
                             Unit = "Bar"
@@ -269,9 +248,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            ErrorCodeId = 3,
-                            MaxThreshold = 100,
-                            MinThreshold = 10,
                             Name = "Fuel Level",
                             ProtocolId = 1,
                             Unit = "%"
@@ -279,9 +255,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            ErrorCodeId = 5,
-                            MaxThreshold = 24,
-                            MinThreshold = 12,
                             Name = "Battery Voltage",
                             ProtocolId = 1,
                             Unit = "V"
@@ -289,9 +262,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            ErrorCodeId = 4,
-                            MaxThreshold = 10,
-                            MinThreshold = 5,
                             Name = "Brake Air Pressure",
                             ProtocolId = 1,
                             Unit = "Bar"
@@ -299,9 +269,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            ErrorCodeId = 6,
-                            MaxThreshold = 100,
-                            MinThreshold = 0,
                             Name = "Transmission Oil Temperature",
                             ProtocolId = 1,
                             Unit = "°C"
@@ -309,19 +276,20 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            ErrorCodeId = 18,
-                            MaxThreshold = 95,
-                            MinThreshold = 0,
                             Name = "Engine Coolant Temperature",
                             ProtocolId = 2,
                             Unit = "°C"
                         },
                         new
                         {
+                            Id = 9,
+                            Name = "Engine Speed (RPM)",
+                            ProtocolId = 2,
+                            Unit = "RPM"
+                        },
+                        new
+                        {
                             Id = 10,
-                            ErrorCodeId = 19,
-                            MaxThreshold = 100,
-                            MinThreshold = 10,
                             Name = "Fuel Level",
                             ProtocolId = 2,
                             Unit = "%"
@@ -329,9 +297,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 11,
-                            ErrorCodeId = 7,
-                            MaxThreshold = 1,
-                            MinThreshold = 0,
                             Name = "Passenger Door Status",
                             ProtocolId = 2,
                             Unit = ""
@@ -339,9 +304,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 12,
-                            ErrorCodeId = 8,
-                            MaxThreshold = 1,
-                            MinThreshold = 0,
                             Name = "AC Compressor Status",
                             ProtocolId = 2,
                             Unit = ""
@@ -349,9 +311,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 13,
-                            ErrorCodeId = 9,
-                            MaxThreshold = 10,
-                            MinThreshold = 5,
                             Name = "Brake Air Pressure",
                             ProtocolId = 2,
                             Unit = "Bar"
@@ -359,9 +318,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 14,
-                            ErrorCodeId = 10,
-                            MaxThreshold = 100,
-                            MinThreshold = 0,
                             Name = "Wheel Speed Front Axle",
                             ProtocolId = 2,
                             Unit = "km/h"
@@ -369,19 +325,20 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 15,
-                            ErrorCodeId = 12,
-                            MaxThreshold = 95,
-                            MinThreshold = 0,
                             Name = "Engine Coolant Temperature",
                             ProtocolId = 3,
                             Unit = "°C"
                         },
                         new
                         {
+                            Id = 16,
+                            Name = "Engine Speed (RPM)",
+                            ProtocolId = 3,
+                            Unit = "RPM"
+                        },
+                        new
+                        {
                             Id = 17,
-                            ErrorCodeId = 17,
-                            MaxThreshold = 100,
-                            MinThreshold = 2,
                             Name = "Oil Pressure",
                             ProtocolId = 3,
                             Unit = "Bar"
@@ -389,9 +346,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 18,
-                            ErrorCodeId = 16,
-                            MaxThreshold = 100,
-                            MinThreshold = 10,
                             Name = "Fuel Level",
                             ProtocolId = 3,
                             Unit = "%"
@@ -399,9 +353,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 19,
-                            ErrorCodeId = 15,
-                            MaxThreshold = 24,
-                            MinThreshold = 12,
                             Name = "Battery Voltage",
                             ProtocolId = 3,
                             Unit = "V"
@@ -409,9 +360,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 20,
-                            ErrorCodeId = 13,
-                            MaxThreshold = 100,
-                            MinThreshold = 20,
                             Name = "Brake Fluid Level",
                             ProtocolId = 3,
                             Unit = "%"
@@ -419,9 +367,6 @@ namespace FleetManager.Infrastructure.Migrations
                         new
                         {
                             Id = 21,
-                            ErrorCodeId = 14,
-                            MaxThreshold = 35,
-                            MinThreshold = 30,
                             Name = "Tire Pressure",
                             ProtocolId = 3,
                             Unit = "PSI"
@@ -494,19 +439,11 @@ namespace FleetManager.Infrastructure.Migrations
 
             modelBuilder.Entity("FleetManager.Domain.Entities.Diagnostics.Sensor", b =>
                 {
-                    b.HasOne("FleetManager.Domain.Entities.Diagnostics.ErrorCode", "ErrorCode")
-                        .WithMany("Sensors")
-                        .HasForeignKey("ErrorCodeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("FleetManager.Domain.Entities.Diagnostics.DiagnosticProtocol", "Protocol")
                         .WithMany("Sensors")
                         .HasForeignKey("ProtocolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ErrorCode");
 
                     b.Navigation("Protocol");
                 });
@@ -526,11 +463,6 @@ namespace FleetManager.Infrastructure.Migrations
                 {
                     b.Navigation("ErrorCodes");
 
-                    b.Navigation("Sensors");
-                });
-
-            modelBuilder.Entity("FleetManager.Domain.Entities.Diagnostics.ErrorCode", b =>
-                {
                     b.Navigation("Sensors");
                 });
 #pragma warning restore 612, 618

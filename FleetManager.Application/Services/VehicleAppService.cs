@@ -9,13 +9,15 @@ namespace FleetManager.Application.Services
     public class VehicleAppService : IVehicleAppService
     {
         private readonly IVehicleRepository _vehicleRepository;
+        private readonly IVehicleFactoryAppService _vehicleFactoryAppService;
 
-        public VehicleAppService(IVehicleRepository vehicleRepository)
+        public VehicleAppService(IVehicleRepository vehicleRepository, IVehicleFactoryAppService vehicleFactoryAppService)
         {
             _vehicleRepository = vehicleRepository;
+            _vehicleFactoryAppService = vehicleFactoryAppService;
         }
 
-        public VehicleDto Create(VehicleDto dto)
+        public VehicleDto Create(CreateVehicleRequest dto)
         {
             var vehicleExists = _vehicleRepository.GetByChassis(dto.ChassisSeries, dto.ChassisNumber) != null;
 
@@ -23,7 +25,7 @@ namespace FleetManager.Application.Services
                 throw new InvalidOperationException("A vehicle with this chassis already exists.");
 
             var vehicleType = Enum.Parse<VehicleType>(dto.Type, ignoreCase: true);
-            var vehicle = VehicleFactory.Create(vehicleType, dto.ChassisSeries, dto.ChassisNumber, dto.Color);
+            var vehicle = _vehicleFactoryAppService.Create(vehicleType, dto.ChassisSeries, dto.ChassisNumber, dto.Color);
 
             _vehicleRepository.Add(vehicle);
             return ToDto(vehicle);
@@ -77,7 +79,8 @@ namespace FleetManager.Application.Services
                 ChassisNumber       = vehicle.ChassisNumber,
                 Type                = vehicle.GetType().Name,
                 Color               = vehicle.Color,
-                NumberOfPassengers  = vehicle.NumberOfPassengers
+                NumberOfPassengers  = vehicle.NumberOfPassengers,
+                DiagnosticProtocol  = vehicle.DiagnosticProtocol.Name
             };
         }
     }

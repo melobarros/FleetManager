@@ -13,7 +13,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IProtocolRepository, ProtocolRepository>();
 builder.Services.AddScoped<IVehicleAppService, VehicleAppService>();
+builder.Services.AddScoped<IVehicleFactoryAppService, VehicleFactoryAppService>();
+builder.Services.AddScoped<IDiagnosticAppService, DiagnosticAppService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

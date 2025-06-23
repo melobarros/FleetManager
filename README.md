@@ -3,6 +3,8 @@
 ## Introduction:
 Fleet Manager is a simple **.NET web application for managing a fleet of vehicles**. 
 It provides **CRUD operations via a REST API**, with full **input validation**, **error handling and unit test coverage**.
+###  **NEW!!** 
+Added functionality: vehicle diagnostics simulation, with simulated diagnostic protocols, sensors and error codes. You can find a simulation output at the end of the README.
 
 
 ## How to Install and Run
@@ -48,10 +50,20 @@ dotnet test
 - **List all vehicles**: returns full details for every vehicle
 - **Find by chassis ID**: returns full details for a single vehicle
 - **Delete a vehicle**: removes the record by chassis ID
+- **NEW!! - Vehicle Diagnostic**: Simulate a vehicle diagnostic with a specific protocol, sensors and error codes. More details below.
+
+### Vehicle Diagnotic Simulation
+- **Research and Definition**: After doing some research on real vehicle diagnostics and protocols like CAN, LIN, FlexRay, J1939 and UDS, I decided to create a simplified simulation, with just Diagnostic Protocol, Sensors and Error Codes.
+- A Vehicle now has a Diagnostic Protocol associated, based on the Vehicle Type (Car, Bus, Truck).
+- For each protocol, there are a set of sensors, with a Unit of Measure,  Min and Max threshhold for reading values.
+- Each sensor has it own Error Code, which is exhibited if the sensor reading is out of the threshholds.
+- Each simulation is unique: During the simulation the sensor has a random chance of having a reading out of threshholds.
+- All neccessary data is already populated via a Seed.
+- You can find a diagnostic simulation output at the end of the README.
 
 ### Technologies and libraries
 - .NET 8 SDK with a ASP.NET Core WebAPI
-- Entity Framework Core with SQLite Database and Migrations
+- Entity Framework Core with SQLite Database and Migrations. **NEW!!** Seed data for the Vehicle Diagnostic Simulations
 - Swagger documentation
 - Unit Testing with xUnit and Moq
 - Azure and GitHub Actions CI/CD pipeline
@@ -64,9 +76,12 @@ dotnet test
 - **Inheritance**: the abstract class Vehicle defines the common properties and rules, with each concrete subclass extending it to implement specific rules (such as Number of Passengers based on Vehicle Type)
 
 ### Unit Tests
-Majority of classes/methods/functions covered by Unit Tests, using xUnit and Moq.
+Majority of classes/methods/functions covered by Unit Tests, using xUnit and Moq. 
 
-### SOLID Principles
+**NEW!!** - To cover cases where the simulation Seed data is necessary, it is used a Fixture to simulate test context, services and repositories, all of which are initialized and disposed after a test.
+
+
+## SOLID Principles
 Some examples of each principle being applied:
 
 **Single Responsibility Principle**
@@ -87,6 +102,46 @@ Some examples of each principle being applied:
 
 **Dependency Inversion Principle**
 - The AppService depends on the interface of the repository, making the EF Core implementation invisible
+
+## Vehicle Diagnostic Simulation Output
+```
+{
+  "vehicleType": 1,
+  "executionDate": "2025-06-23T09:00:25.1388857-03:00",
+  "readings": [
+    {
+      "sensor": "Engine Coolant Temperature",
+      "value": 10
+    },
+    {
+      "sensor": "Oil Pressure",
+      "value": 76
+    },
+    {
+      "sensor": "Fuel Level",
+      "value": 50
+    },
+    {
+      "sensor": "Battery Voltage",
+      "value": 12
+    },
+    {
+      "sensor": "Brake Air Pressure",
+      "value": 10
+    },
+    {
+      "sensor": "Transmission Oil Temperature",
+      "value": 112
+    }
+  ],
+  "errors": [
+    {
+      "code": "T006",
+      "description": "Transmission Oil Overheating"
+    }
+  ]
+}
+```
 
 ## Credits
 Developed by Amauri Barros
