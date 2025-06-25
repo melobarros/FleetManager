@@ -136,6 +136,14 @@ namespace FleetManager.Infrastructure.Migrations
                     { 21, "Tire Pressure", 3, "PSI" }
                 });
 
+            migrationBuilder.Sql("PRAGMA foreign_keys = OFF;");
+            migrationBuilder.Sql(@"
+                DELETE FROM Vehicles
+                WHERE DiagnosticProtocolId = 0
+                OR DiagnosticProtocolId NOT IN (SELECT Id FROM DiagnosticProtocols);
+            ");
+            migrationBuilder.Sql("PRAGMA foreign_keys = ON;");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_DiagnosticProtocolId",
                 table: "Vehicles",
