@@ -10,7 +10,13 @@ namespace FleetManager.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("DELETE FROM Vehicles WHERE ProtocolId IS NULL");
+            migrationBuilder.Sql(@"
+              PRAGMA foreign_keys = OFF;
+              DELETE FROM Vehicles
+              WHERE DiagnosticProtocolId IS NULL
+                 OR DiagnosticProtocolId NOT IN (SELECT Id FROM DiagnosticProtocols);
+              PRAGMA foreign_keys = ON;
+            ");
         }
 
         /// <inheritdoc />
